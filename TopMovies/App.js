@@ -1,102 +1,196 @@
 import React, { Component } from 'react';
-import {Animated, StyleSheet, View, Text, Image, ImageBackground, ScrollView, SafeAreaView} from 'react-native';
-import StarRating from 'react-native-star-rating';
-import {Card, Icon} from 'native-base';
-import subtitles from './data/subtitles';
-import cast from './data/cast';
+import {Animated, TouchableOpacity, SafeAreaView, StyleSheet, ScrollView, View, Text, Image, ImageBackground} from 'react-native';
+import {Icon} from 'native-base';
+import movies from './data/movies';
+import trailers from './data/trailers';
 
-var types = ["Crime", "Drama", "Thriller"];
+animatedValues = {
+  animatedValue0: new Animated.Value(0),
+  animatedValue1: new Animated.Value(150),
+  animatedValue2: new Animated.Value(0),
+  animatedValue3: new Animated.Value(0),
+  animatedValue4: new Animated.Value(0),
+}
 
-export default class screen2 extends Component {
-  constructor(props)
-  {
+class DateView extends Component {
+
+  constructor(props) {
     super(props);
     this.state = {
-      width: new Animated.Value(103.75),
-      height: new Animated.Value(106.25),
-      opacity: new Animated.Value(0)
+      color: this.props.color
     }
-    Animated.timing(this.state.width, {
-      duration: 700,
-      toValue: 415,
-      useNativeDriver: false
-    }).start();
-    Animated.timing(this.state.height, {
-      duration: 700,
-      toValue: 425,
-      useNativeDriver: false
-    }).start();
-    Animated.timing(this.state.opacity, {
-      duration: 700,
-      toValue: 1,
-      useNativeDriver: true
-    }).start();
   }
+
+  static getDerivedStateFromProps(nextProps, prevState){
+    if(nextProps.color != prevState.color)
+    {
+      return {color : nextProps.path};
+    }
+    else return null;
+  }
+
+  dateClicked(id) {
+    this.props.action(id)
+  }
+
+  render(){
+    return(
+      <Animated.View style={{marginRight: 10, backgroundColor: this.state.color, width: 75, height: 85, borderRadius: 15, justifyContent: 'center'}}>
+        <TouchableOpacity onPress={() => {this.dateClicked(this.props.id)}}>
+          <Text style={{color: this.props.textColor, fontFamily: 'Avenir Next', fontSize: 16, fontWeight: '300', alignSelf: 'center'}}>{this.props.day}</Text>
+          <Text style={{color: this.props.textColor, fontFamily: 'Avenir Next', fontSize: 22, fontWeight: '500', alignSelf: 'center'}}>{this.props.date}</Text>
+        </TouchableOpacity>
+      </Animated.View>
+    )
+  }
+}
+
+class DateViewController extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      0: {
+        day: 'Th',
+        num: '15',
+        color: animatedValues["animatedValue" + 0].interpolate({
+                inputRange: [0, 150],
+                outputRange: ['rgb(242, 242, 242)', 'rgb(232, 25, 86)']
+              }),
+        text: '#000000',
+        active: false
+      },
+      1: {
+        day: 'Fri',
+        num: '16',
+        color: animatedValues["animatedValue" + 1].interpolate({
+                  inputRange: [0, 150],
+                  outputRange: ['rgb(242, 242, 242)', 'rgb(232, 25, 86)']
+                }),
+        text: '#FFFFFF',
+        active: true
+      },
+      2: {
+        day: 'Sat',
+        num: '17',
+        color: animatedValues["animatedValue" + 2].interpolate({
+          inputRange: [0, 150],
+          outputRange: ['rgb(242, 242, 242)', 'rgb(232, 25, 86)']
+        }),
+        text: '#000000',
+        active: false
+      },
+      3: {
+        day: 'Sun',
+        num: '18',
+        color: animatedValues["animatedValue" + 3].interpolate({
+          inputRange: [0, 150],
+          outputRange: ['rgb(242, 242, 242)', 'rgb(232, 25, 86)']
+        }),
+        text: '#000000',
+        active: false
+      },
+      4: {
+        day: 'Mon',
+        num: '19',
+        color: animatedValues["animatedValue" + 4].interpolate({
+          inputRange: [0, 150],
+          outputRange: ['rgb(242, 242, 242)', 'rgb(232, 25, 86)']
+        }),
+        text: '#000000',
+        active: false
+      }
+    }
+    this.handler = this.handler.bind(this);
+  }  
+
+  handler(id) {
+    Object.keys(this.state).map((key, index)=> {
+      var date = {...this.state[key]};
+      var isActive = date["active"];
+      if (id == index && !isActive)
+      {
+        date["active"] = true;
+        date["text"] = "#FFFFFF";
+        Animated.timing(animatedValues["animatedValue" + id], {
+          toValue: 150,
+          duration: 500,
+          useNativeDriver: false
+        }).start();
+        this.setState({[id]: date});
+      }
+      else if (id == index && isActive)
+      {
+        // Don't do anything
+      }
+      else
+      {
+        date["active"] = false;
+        date["text"] = "#000000";
+        // update color for rest of views
+        Animated.timing(animatedValues["animatedValue" + index], {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: false
+        }).start();
+        this.setState({[index]: date});
+      }
+    });
+  }
+
+  render(){
+    let items = Object.keys(this.state).map((key, index) => {
+      return(
+        <DateView action={this.handler} day={this.state[key].day} date={this.state[key].num} textColor={this.state[key].text} color={this.state[key].color} key={key} id={index}> 
+        </DateView>
+      )
+    });
+    return(
+      <View style={{flexDirection: 'row'}}>
+        {items}
+      </View>
+    )
+  }
+}
+
+export default class screen1 extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
-      <View>
-        <Animated.Image style={{alignSelf: 'center', borderRadius: 15, width: this.state.width, height: this.state.height}} source={require('./images/joker2.jpg')}></Animated.Image>
-        <Animated.View style={{opacity: this.state.opacity}}>
-          <Card style={{marginTop: -85, alignSelf: 'center', height: 150, width: '92%', borderRadius: 15}}>
-            <View style={{flexDirection: 'row', backgroundColor: '#F2F2F2', width: '100%', height: '40%', borderTopLeftRadius: 15, borderTopRightRadius: 15}}>
-              <View style={{width: '35%', height: '100%'}}>
-                <Text style={{marginLeft: 15, marginTop: 5, fontFamily: 'Avenir Next', fontSize: 26, fontWeight: 'bold', color: '#404040'}}>JOKER</Text>
-                <StarRating
-                  disabled={true}
-                  maxStars={5}
-                  rating={4}
-                  fullStarColor={'#F19D25'}
-                  starSize={15}
-                  containerStyle={{marginLeft: 15, justifyContent: 'flex-start'}}
-                  buttonStyle={{paddingRight: 4.25}}
-                />
-              </View>
-              <View style={{justifyContent: 'center', width: '65%', height: '100%'}}>
-                <Image style={{alignSelf: 'flex-end', marginRight: 10, width: 100, height: 50}} source={require('./images/imdb.png')}></Image>
-              </View>
+        <SafeAreaView>
+          <View style={{marginLeft: 20, marginRight: 20}}>
+            <View onPress={this.animateTextInput} style={{backgroundColor: 'rgba(242,242,242,0.45)', width: '100%', height: 45, borderRadius: 5, flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Animated.Text style={[{color: '#d1d5dd', fontFamily: 'Avenir Next', marginLeft: 15, alignSelf: 'center'}]}>Search</Animated.Text>
+                <Icon type="MaterialIcons" name="search" style={{marginRight: 10, fontSize: 25, color: '#e81956', alignSelf: 'center'}}></Icon>
             </View>
-            <View style={{height: '60%', flexDirection: 'row'}}>
-            {
-              Object.keys(subtitles).map((key, index) => (
-                <View style={{alignSelf: 'center', width: subtitles[key].width}} key={index}>
-                  <Text style={{fontFamily: 'Avenir Next', fontSize: 20, fontWeight: '700', alignSelf: 'center'}}>{subtitles[key].title}</Text>
-                  <Text style={{marginTop: 10, color: '#404040', fontFamily: 'Arial', fontSize: 16, fontWeight: '400', alignSelf: 'center'}}>{subtitles[key].value}</Text>
-                </View>
-              ))
-            }
-            </View>
-          </Card>
-        </Animated.View>
-        <View style={{margin: 20}}>
-          <Text style={{fontFamily: 'Avenir Next', fontSize: 20, fontWeight: '600'}}>Plot Summary</Text>
-          <Text style={{fontFamily: 'Arial', marginTop: 5, color: '#808080', fontWeight: '300', fontSize: 16}}>In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.</Text>
-        </View>
-        <View style={{flexDirection: 'row', marginLeft: 20, marginRight: 20}}>
-        {
-          types.map((key, index) => {
-            return(
-              <View key={key} style={{marginRight: 35, width: 100, height: 35, backgroundColor: '#F2F2F2', borderRadius: 15, justifyContent: 'center'}}>
-                <Text style={{fontFamily: 'Arial', fontWeight: '400', fontSize: 18, alignSelf: 'center'}}>{key}</Text>
-              </View>
-            )
-          })
-        }
-        </View>
-        <View style={{marginTop: 10, marginLeft: 20, marginRight: 20}}>
-          <Text style={{fontFamily: 'Avenir Next', fontSize: 20, fontWeight: '600'}}>Cast</Text>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {
-            Object.keys(cast).map((key, index) => (
-              <View style={{marginRight: 15, width: 75, height: 115}} key={index}>
-                <Image style={{borderRadius: 15, width: 75, height: 75}} source={cast[key].image}></Image>
-                <Text style={{marginTop: 5, alignSelf: 'center'}}>{cast[key].name}</Text>
-              </View>
-            ))
-          }
-          </ScrollView>
-        </View>
-      
-      </View>
+            <Text style={{marginTop: 15, fontFamily: 'Avenir Next', fontSize: 46, fontWeight: '400'}}>Explore</Text>
+            <Text style={{fontFamily: 'Avenir Next', fontSize: 46, fontWeight: '600'}}>Top Movies</Text>
+            <ScrollView style={{marginTop: 10}} horizontal={true} showsHorizontalScrollIndicator={false}>
+              <DateViewController></DateViewController>
+            </ScrollView>
+            <ScrollView style={{marginTop: 15}} horizontal={true} showsHorizontalScrollIndicator={false}>
+              {
+                Object.keys(movies).map((key, index) => (
+                  <Image key={index} style={{width: 225, height: 350, borderRadius: 25, marginRight: 25}} source={movies[key].url}></Image>
+                ))
+              }
+            </ScrollView>
+            <Text style={{marginTop: 15, fontFamily: 'Avenir Next', fontSize: 24, fontWeight: '600'}}>Trailers</Text>
+            <ScrollView style={{marginTop: 5}} horizontal={true} showsHorizontalScrollIndicator={false}>
+              {
+                Object.keys(trailers).map((key, index) => (
+                  <ImageBackground key={index} style={{width: 150, height: 85, marginRight: 15}} imageStyle={{borderRadius: 15}} source={trailers[key].url}>
+                    <View style={{justifyContent: 'center', marginTop: 10, marginLeft: 10, width: 25, height: 25, backgroundColor: 'rgba(0,0,0,0.65)', borderRadius: 100}}>
+                      <Icon type="MaterialIcons" name="play-circle-outline" style={{fontSize: 20, alignSelf: 'center', color: '#FFFFFF'}}></Icon>
+                    </View>
+                  </ImageBackground>
+                ))
+              }
+            </ScrollView>
+          </View>
+        </SafeAreaView>
     );
   }
 }
