@@ -156,18 +156,21 @@ export default class screen1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fontSizeAnimated: 16
+      fontSizeAnimated: 16,
+      iconSizeAnimated: 25
     }
   }
 
   animateSearch() {
     if (this.state.fontSizeAnimated === 16)
     {
-      this.setState({fontSizeAnimated: 20})
+      this.setState({fontSizeAnimated: 20});
+      this.setState({iconSizeAnimated: 30});
     }
     else
     {
-      this.setState({fontSizeAnimated: 16})
+      this.setState({fontSizeAnimated: 16});
+      this.setState({iconSizeAnimated: 25});
     }
   }
 
@@ -177,7 +180,7 @@ export default class screen1 extends Component {
           <View style={{marginLeft: 20, marginRight: 20}}>
             <View onPress={this.animateTextInput} style={{backgroundColor: 'rgba(242,242,242,0.45)', width: '100%', height: 45, borderRadius: 5, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <TextInput style={[{fontSize: this.state.fontSizeAnimated, color: '#d1d5dd', fontFamily: 'Avenir Next', marginLeft: 15, alignSelf: 'center'}]} placeholder="Search" onFocus={() => this.animateSearch()} onSubmitEditing={() => this.animateSearch()}></TextInput>
-                <Icon type="MaterialIcons" name="search" style={{marginRight: 10, fontSize: 25, color: '#e81956', alignSelf: 'center'}}></Icon>
+                <Icon type="MaterialIcons" name="search" style={{marginRight: 10, fontSize: this.state.iconSizeAnimated, color: '#e81956', alignSelf: 'center'}}></Icon>
             </View>
             <Text style={{marginTop: 15, fontFamily: 'Avenir Next', fontSize: 46, fontWeight: '400'}}>Explore</Text>
             <Text style={{fontFamily: 'Avenir Next', fontSize: 46, fontWeight: '600'}}>Top Movies</Text>
