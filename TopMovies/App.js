@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Animated, TouchableOpacity, SafeAreaView, StyleSheet, ScrollView, View, Text, Image, ImageBackground} from 'react-native';
+import {TextInput, Animated, TouchableOpacity, SafeAreaView, StyleSheet, ScrollView, View, Text, Image, ImageBackground} from 'react-native';
 import {Icon} from 'native-base';
 import movies from './data/movies';
 import trailers from './data/trailers';
@@ -155,6 +155,20 @@ class DateViewController extends Component {
 export default class screen1 extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      fontSizeAnimated: 16
+    }
+  }
+
+  animateSearch() {
+    if (this.state.fontSizeAnimated === 16)
+    {
+      this.setState({fontSizeAnimated: 20})
+    }
+    else
+    {
+      this.setState({fontSizeAnimated: 16})
+    }
   }
 
   render() {
@@ -162,7 +176,7 @@ export default class screen1 extends Component {
         <SafeAreaView>
           <View style={{marginLeft: 20, marginRight: 20}}>
             <View onPress={this.animateTextInput} style={{backgroundColor: 'rgba(242,242,242,0.45)', width: '100%', height: 45, borderRadius: 5, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Animated.Text style={[{color: '#d1d5dd', fontFamily: 'Avenir Next', marginLeft: 15, alignSelf: 'center'}]}>Search</Animated.Text>
+                <TextInput style={[{fontSize: this.state.fontSizeAnimated, color: '#d1d5dd', fontFamily: 'Avenir Next', marginLeft: 15, alignSelf: 'center'}]} placeholder="Search" onFocus={() => this.animateSearch()} onSubmitEditing={() => this.animateSearch()}></TextInput>
                 <Icon type="MaterialIcons" name="search" style={{marginRight: 10, fontSize: 25, color: '#e81956', alignSelf: 'center'}}></Icon>
             </View>
             <Text style={{marginTop: 15, fontFamily: 'Avenir Next', fontSize: 46, fontWeight: '400'}}>Explore</Text>
