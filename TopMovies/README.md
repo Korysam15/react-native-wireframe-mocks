@@ -2,13 +2,13 @@
 
 ### Created By: [Lasha Monaselidze](https://dribbble.com/Lasha_mo)
 
-![Top Movies Snapshot](/images/TopMovies.png)
+![Top Movies Snapshot](https://bitbucket.org/KKUDDA/react-native-ui-snapshots/raw/fd091bece2d614dc304b24c857fda64832faa003/TopMovies/images/TopMovies.png)
 
 ## React Native Mockup
 
-![Screen 1](/videos/screen1.gif)
+![Screen 1](https://bitbucket.org/KKUDDA/react-native-ui-snapshots/raw/fd091bece2d614dc304b24c857fda64832faa003/TopMovies/videos/screen1.gif)
 
-![Screen 2](/videos/screen2.gif)
+![Screen 2](https://bitbucket.org/KKUDDA/react-native-ui-snapshots/raw/fd091bece2d614dc304b24c857fda64832faa003/TopMovies/videos/screen2.gif)
 
 
 ## Run Screen 1
