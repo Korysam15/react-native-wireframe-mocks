@@ -78,8 +78,8 @@ class DateViewController extends Component {
                   outputRange: ['rgb(242, 242, 242)', 'rgb(229, 163, 113)']
                 }),
         iconColor: "#FFFFFF",
-        iconSize: 60,
-        fontSize: 24,
+        iconSize: 55,
+        fontSize: 22,
         active: true
       },
       2: {
@@ -118,8 +118,8 @@ class DateViewController extends Component {
       {
         date["active"] = true;
         date["iconColor"] = "#FFFFFF";
-        date["fontSize"] = 24;
-        date["iconSize"] = 60;
+        date["fontSize"] = 22;
+        date["iconSize"] = 55;
         Animated.timing(animatedValues["animatedValue" + id], {
           toValue: 150,
           duration: 500,
@@ -194,8 +194,14 @@ export default class screen1 extends Component {
             <Text style={{fontFamily: 'Avenir Next', fontSize: 46, fontWeight: '600', color: '#2A3E64'}}>Destinations</Text>
             <DateViewController></DateViewController>
             <ImageBackground style={{marginTop: 20, width: '100%', height: 200, marginRight: 15}} imageStyle={{borderRadius: 15}} source={require('./images/sydney.jpg')}>
-              <View style={{justifyContent: 'center', marginTop: 10, marginLeft: 10, width: 25, height: 25, backgroundColor: 'rgba(0,0,0,0.65)', borderRadius: 100}}>
-                <Icon type="MaterialIcons" name="play-circle-outline" style={{fontSize: 20, alignSelf: 'center', color: '#FFFFFF'}}></Icon>
+              <View style={{width: '100%', height: 200, justifyContent: 'flex-end'}}>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-end', marginRight: 10}}>
+                  <ImageBackground source={require('./images/face.png')} imageStyle={{borderRadius: 100}} style={{justifyContent: 'flex-end', borderRadius: 100, marginBottom: 10, width: 35, height: 35, backgroundColor: '#FFFFFF', borderColor: '#FFFFFF', borderWidth: 1}}>
+                  </ImageBackground>
+                  <View style={{justifyContent: 'center', marginBottom: 10, width: 35, height: 35, marginLeft: -5, backgroundColor: '#e58a90', borderRadius: 100, borderColor: '#FFFFFF', borderWidth: 1}}>
+                    <Text style={{fontFamily: 'Avenir Next', fontWeight: '600', color: '#FFFFFF', alignSelf: 'center'}}>15+</Text>
+                  </View>
+                </View>
               </View>
             </ImageBackground>
             <Text style={{marginTop: 15, fontFamily: 'Avenir Next', fontSize: 24, fontWeight: '600', color: '#2A3E64'}}>Popular Places</Text>
