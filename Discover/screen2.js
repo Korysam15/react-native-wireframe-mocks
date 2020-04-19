@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
 import {TextInput, Animated, TouchableOpacity, SafeAreaView, StyleSheet, ScrollView, View, Text, Image, ImageBackground} from 'react-native';
 import {Icon} from 'native-base';
-import places from './data/places';
+import movies from './data/movies';
+import trailers from './data/trailers';
 
 animatedValues = {
   animatedValue0: new Animated.Value(0),
   animatedValue1: new Animated.Value(150),
   animatedValue2: new Animated.Value(0),
   animatedValue3: new Animated.Value(0),
-}
-
-ogIconColors = {
-  0: "#6295a4",
-  1: "#E5A371",
-  2: "#81bfce",
-  3: "#e08a8a",
+  animatedValue4: new Animated.Value(0),
 }
 
 class DateView extends Component {
@@ -22,7 +17,7 @@ class DateView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      color: this.props.color,
+      color: this.props.color
     }
   }
 
@@ -40,16 +35,12 @@ class DateView extends Component {
 
   render(){
     return(
-      <View>
-        <Animated.View style={{marginTop: 15, marginRight: 23, backgroundColor: this.state.color, width: 75, height: 85, borderRadius: 15, justifyContent: 'center'}}>
-          <TouchableOpacity onPress={() => {this.dateClicked(this.props.id)}}>
-            <Icon type="MaterialIcons" name={this.props.icon} style={{color: this.props.iconColor, marginLeft: 2.5, fontSize: this.props.iconSize, alignSelf: 'center'}}></Icon>
-          </TouchableOpacity>
-        </Animated.View>
-        <View style={{marginTop: 5, width: 75, height: 35, justifyContent: 'center'}}>
-          <Animated.Text style={{fontFamily: 'Avenir Next', fontSize: this.props.fontSize, fontWeight: '500', alignSelf: 'center'}}>{this.props.title}</Animated.Text>
-        </View>
-      </View>
+      <Animated.View style={{marginRight: 10, backgroundColor: this.state.color, width: 75, height: 85, borderRadius: 15, justifyContent: 'center'}}>
+        <TouchableOpacity onPress={() => {this.dateClicked(this.props.id)}}>
+          <Text style={{color: this.props.textColor, fontFamily: 'Avenir Next', fontSize: 16, fontWeight: '300', alignSelf: 'center'}}>{this.props.day}</Text>
+          <Text style={{color: this.props.textColor, fontFamily: 'Avenir Next', fontSize: 22, fontWeight: '500', alignSelf: 'center'}}>{this.props.date}</Text>
+        </TouchableOpacity>
+      </Animated.View>
     )
   }
 }
@@ -59,53 +50,55 @@ class DateViewController extends Component {
     super(props);
     this.state = {
       0: {
-        icon: 'airplanemode-active',
-        title: 'Flight',
+        day: 'Th',
+        num: '15',
         color: animatedValues["animatedValue" + 0].interpolate({
                 inputRange: [0, 150],
-                outputRange: ['rgb(242, 242, 242)', 'rgb(98, 149, 164)']
+                outputRange: ['rgb(242, 242, 242)', 'rgb(232, 25, 86)']
               }),
-        iconColor: "#6295a4",
-        iconSize: 40,
-        fontSize: 18,
+        text: '#000000',
         active: false
       },
       1: {
-        icon: 'directions-car',
-        title: 'Car',
+        day: 'Fri',
+        num: '16',
         color: animatedValues["animatedValue" + 1].interpolate({
                   inputRange: [0, 150],
-                  outputRange: ['rgb(242, 242, 242)', 'rgb(229, 163, 113)']
+                  outputRange: ['rgb(242, 242, 242)', 'rgb(232, 25, 86)']
                 }),
-        iconColor: "#FFFFFF",
-        iconSize: 60,
-        fontSize: 24,
+        text: '#FFFFFF',
         active: true
       },
       2: {
-        icon: 'directions-boat',
-        title: 'Cruise',
+        day: 'Sat',
+        num: '17',
         color: animatedValues["animatedValue" + 2].interpolate({
           inputRange: [0, 150],
-          outputRange: ['rgb(242, 242, 242)', 'rgb(129, 191, 206)']
+          outputRange: ['rgb(242, 242, 242)', 'rgb(232, 25, 86)']
         }),
-        iconColor: "#81bfce",
-        fontSize: 18,
-        iconSize: 40,
+        text: '#000000',
         active: false
       },
       3: {
-        icon: 'train',
-        title: 'Train',
+        day: 'Sun',
+        num: '18',
         color: animatedValues["animatedValue" + 3].interpolate({
           inputRange: [0, 150],
-          outputRange: ['rgb(242, 242, 242)', 'rgb(224, 138, 138)']
+          outputRange: ['rgb(242, 242, 242)', 'rgb(232, 25, 86)']
         }),
-        fontSize: 18,
-        iconSize: 40,
-        iconColor: "#e08a8a",
+        text: '#000000',
         active: false
       },
+      4: {
+        day: 'Mon',
+        num: '19',
+        color: animatedValues["animatedValue" + 4].interpolate({
+          inputRange: [0, 150],
+          outputRange: ['rgb(242, 242, 242)', 'rgb(232, 25, 86)']
+        }),
+        text: '#000000',
+        active: false
+      }
     }
     this.handler = this.handler.bind(this);
   }  
@@ -117,9 +110,7 @@ class DateViewController extends Component {
       if (id == index && !isActive)
       {
         date["active"] = true;
-        date["iconColor"] = "#FFFFFF";
-        date["fontSize"] = 24;
-        date["iconSize"] = 60;
+        date["text"] = "#FFFFFF";
         Animated.timing(animatedValues["animatedValue" + id], {
           toValue: 150,
           duration: 500,
@@ -134,9 +125,7 @@ class DateViewController extends Component {
       else
       {
         date["active"] = false;
-        date["iconColor"] = ogIconColors[index];
-        date["fontSize"] = 18;
-        date["iconSize"] = 40;
+        date["text"] = "#000000";
         // update color for rest of views
         Animated.timing(animatedValues["animatedValue" + index], {
           toValue: 0,
@@ -151,7 +140,7 @@ class DateViewController extends Component {
   render(){
     let items = Object.keys(this.state).map((key, index) => {
       return(
-        <DateView action={this.handler} icon={this.state[key].icon} iconSize={this.state[key].iconSize} title={this.state[key].title} iconColor={this.state[key].iconColor} fontSize={this.state[key].fontSize} color={this.state[key].color} key={key} id={index}> 
+        <DateView action={this.handler} day={this.state[key].day} date={this.state[key].num} textColor={this.state[key].text} color={this.state[key].color} key={key} id={index}> 
         </DateView>
       )
     });
@@ -188,21 +177,28 @@ export default class screen1 extends Component {
           <View style={{marginLeft: 20, marginRight: 20}}>
             <View onPress={this.animateTextInput} style={{backgroundColor: 'rgba(242,242,242,0.45)', width: '100%', height: 45, borderRadius: 5, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <TextInput style={[{fontSize: this.state.fontSizeAnimated, color: '#d1d5dd', fontFamily: 'Avenir Next', marginLeft: 15, alignSelf: 'center'}]} placeholder="Search" onFocus={() => this.animateSearch()} onSubmitEditing={() => this.animateSearch()}></TextInput>
-                <Icon type="MaterialIcons" name="search" style={{marginRight: 10, fontSize: 25, color: '#2A3E64', alignSelf: 'center'}}></Icon>
+                <Icon type="MaterialIcons" name="search" style={{marginRight: 10, fontSize: 25, color: '#e81956', alignSelf: 'center'}}></Icon>
             </View>
-            <Text style={{marginTop: 15, fontFamily: 'Avenir Next', fontSize: 46, fontWeight: '400', color: '#6295a4'}}>Discover</Text>
-            <Text style={{fontFamily: 'Avenir Next', fontSize: 46, fontWeight: '600', color: '#2A3E64'}}>Destinations</Text>
-            <DateViewController></DateViewController>
-            <ImageBackground style={{marginTop: 20, width: '100%', height: 200, marginRight: 15}} imageStyle={{borderRadius: 15}} source={require('./images/sydney.jpg')}>
-              <View style={{justifyContent: 'center', marginTop: 10, marginLeft: 10, width: 25, height: 25, backgroundColor: 'rgba(0,0,0,0.65)', borderRadius: 100}}>
-                <Icon type="MaterialIcons" name="play-circle-outline" style={{fontSize: 20, alignSelf: 'center', color: '#FFFFFF'}}></Icon>
-              </View>
-            </ImageBackground>
-            <Text style={{marginTop: 15, fontFamily: 'Avenir Next', fontSize: 24, fontWeight: '600', color: '#2A3E64'}}>Popular Places</Text>
+            <Text style={{marginTop: 15, fontFamily: 'Avenir Next', fontSize: 46, fontWeight: '400'}}>Explore</Text>
+            <Text style={{fontFamily: 'Avenir Next', fontSize: 46, fontWeight: '600'}}>Top Movies</Text>
+            <ScrollView style={{marginTop: 10}} horizontal={true} showsHorizontalScrollIndicator={false}>
+              <DateViewController></DateViewController>
+            </ScrollView>
+            <ScrollView style={{marginTop: 15}} horizontal={true} showsHorizontalScrollIndicator={false}>
+              {
+                Object.keys(movies).map((key, index) => (
+                  <Image key={index} style={{width: 225, height: 350, borderRadius: 25, marginRight: 25}} source={movies[key].url}></Image>
+                ))
+              }
+            </ScrollView>
+            <Text style={{marginTop: 15, fontFamily: 'Avenir Next', fontSize: 24, fontWeight: '600'}}>Trailers</Text>
             <ScrollView style={{marginTop: 5}} horizontal={true} showsHorizontalScrollIndicator={false}>
               {
-                Object.keys(places).map((key, index) => (
-                  <ImageBackground key={index} style={{marginTop: 10, width: 150, height: 165, marginRight: 15}} imageStyle={{borderRadius: 15}} source={places[key].url}>
+                Object.keys(trailers).map((key, index) => (
+                  <ImageBackground key={index} style={{width: 150, height: 85, marginRight: 15}} imageStyle={{borderRadius: 15}} source={trailers[key].url}>
+                    <View style={{justifyContent: 'center', marginTop: 10, marginLeft: 10, width: 25, height: 25, backgroundColor: 'rgba(0,0,0,0.65)', borderRadius: 100}}>
+                      <Icon type="MaterialIcons" name="play-circle-outline" style={{fontSize: 20, alignSelf: 'center', color: '#FFFFFF'}}></Icon>
+                    </View>
                   </ImageBackground>
                 ))
               }
