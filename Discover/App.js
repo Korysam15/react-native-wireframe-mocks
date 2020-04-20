@@ -187,7 +187,7 @@ export default class screen1 extends Component {
         <SafeAreaView>
           <View style={{marginLeft: 20, marginRight: 20}}>
             <View onPress={this.animateTextInput} style={{backgroundColor: 'rgba(242,242,242,0.45)', width: '100%', height: 45, borderRadius: 5, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <TextInput style={[{fontSize: this.state.fontSizeAnimated, color: '#d1d5dd', fontFamily: 'Avenir Next', marginLeft: 15, alignSelf: 'center'}]} placeholder="Search" onFocus={() => this.animateSearch()} onSubmitEditing={() => this.animateSearch()}></TextInput>
+                <TextInput style={[{fontSize: this.state.fontSizeAnimated, color: '#d1d5dd', fontFamily: 'Avenir Next', marginLeft: 15, alignSelf: 'center'}]} placeholderTextColor='#d1d5dd' placeholder="Search" onFocus={() => this.animateSearch()} onSubmitEditing={() => this.animateSearch()}></TextInput>
                 <Icon type="MaterialIcons" name="search" style={{marginRight: 10, fontSize: 25, color: '#2A3E64', alignSelf: 'center'}}></Icon>
             </View>
             <Text style={{marginTop: 15, fontFamily: 'Avenir Next', fontSize: 46, fontWeight: '400', color: '#6295a4'}}>Discover</Text>
