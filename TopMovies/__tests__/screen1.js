@@ -26,7 +26,10 @@ class DateView extends Component {
     {
       return {color : nextProps.path};
     }
-    else return null;
+    else 
+    {
+      return null;
+    }
   }
 
   dateClicked(id) {
