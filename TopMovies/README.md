@@ -6,9 +6,9 @@
 
 ## React Native Mockup
 
-![Screen 1](https://bitbucket.org/KKUDDA/react-native-ui-snapshots/raw/fd091bece2d614dc304b24c857fda64832faa003/TopMovies/videos/screen1.gif)
+![Screen 1](https://github.com/Korysam15/react-native-wireframe-mocks/blob/main/TopMovies/videos/screen1.gif)
 
-![Screen 2](https://bitbucket.org/KKUDDA/react-native-ui-snapshots/raw/fd091bece2d614dc304b24c857fda64832faa003/TopMovies/videos/screen2.gif)
+![Screen 2](https://github.com/Korysam15/react-native-wireframe-mocks/blob/main/TopMovies/videos/screen2.gif)
 
 
 ## Run Screen 1
