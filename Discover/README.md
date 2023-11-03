@@ -6,9 +6,9 @@
 
 ## React Native Mockup
 
-![Screen 1](/videos/screen1.gif)
+![Screen 1](./screen1.gif)
 
-![Screen 2](/videos/screen2.gif)
+![Screen 2](./screen2.gif)
 
 
 ## Run Screen 1
