@@ -15,7 +15,7 @@ Go to the following [link](https://reactnative.dev/docs/environment-setup) and c
 
 Terminal
 
-`git clone https://KKUDDA@bitbucket.org/KKUDDA/react-native-ui-snapshots.git`
+`git clone https://github.com/Korysam15/react-native-wireframe-mocks.git`
 
 Download
 
